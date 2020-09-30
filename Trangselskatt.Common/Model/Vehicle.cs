@@ -17,14 +17,19 @@ namespace Trangselskatt.Common.Model
         /// </summary>
         public VehicleType Type { get; }
 
+        /// <summary>
+        /// Returnerar huruvida ett fordon är trängselskattepliktigt
+        /// </summary>
+        public bool PaysCongestionTax => IsTrangselskattepliktigt();
+
         public Vehicle(string registrationNumber, VehicleType type = VehicleType.Other)
         {
-            RegistrationNumber = registrationNumber;
+            RegistrationNumber = registrationNumber ?? throw new ArgumentNullException(nameof(registrationNumber));
             Type = type;
         }
 
         /// <summary>
-        /// Definierar regler huruvida en fordon är trängselskattepliktigt
+        /// Definierar regler huruvida ett fordon är trängselskattepliktigt
         /// </summary>
         /// <returns>true om fordonet är trängselskattepliktigt, false annars</returns>
         public bool IsTrangselskattepliktigt()
@@ -32,34 +37,44 @@ namespace Trangselskatt.Common.Model
             return Type == VehicleType.Other;
         }
 
+        #region IEquatable
         public bool Equals(Vehicle other)
         {
-            if (ReferenceEquals(null, other)) return false;
+            if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
+            if (GetType() != other.GetType()) return false;
+
             return RegistrationNumber == other.RegistrationNumber;
         }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((Vehicle)obj);
+            return this.Equals(obj as Vehicle);
         }
 
         public override int GetHashCode()
         {
-            return (RegistrationNumber != null ? RegistrationNumber.GetHashCode() : 0);
+            return RegistrationNumber != null ? RegistrationNumber.GetHashCode() : 0;
         }
 
         public static bool operator ==(Vehicle left, Vehicle right)
         {
-            return left != null && left.Equals(right);
+            if (left is null)
+            {
+                return right is null;
+            }
+            return left.Equals(right);
         }
 
         public static bool operator !=(Vehicle left, Vehicle right)
         {
             return !(left == right);
+        }
+        #endregion
+
+        public override string ToString()
+        {
+            return $"Vehicle: Registreringsnummer:{RegistrationNumber}, Type: {Type.ToString()}";
         }
     }
 }

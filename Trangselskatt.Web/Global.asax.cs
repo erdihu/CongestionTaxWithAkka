@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Trangselskatt.Web.Models;
 
 namespace Trangselskatt.Web
 {
@@ -18,6 +19,13 @@ namespace Trangselskatt.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            TrangselskattActorSystem.Create();
+        }
+
+        protected void Application_End()
+        {
+            TrangselskattActorSystem.Shutdown();
         }
     }
 }

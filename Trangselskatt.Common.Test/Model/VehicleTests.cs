@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using Trangselskatt.Common.Model;
 
 namespace Trangselskatt.Common.Test.Model
@@ -40,9 +41,26 @@ namespace Trangselskatt.Common.Test.Model
             Assert.IsFalse(car5.IsTrangselskattepliktigt());
         }
 
+        [TestMethod]
         public void Vehicles_Should_Be_Equal_If_They_Have_Same_RegNr()
         {
+            //Setup
+            var left = new Vehicle("ABC123");
+            var right = new Vehicle("ABC123");
 
+            //Act
+            var areEqual = left == right;
+
+            //Assert
+            Assert.IsTrue(areEqual);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Vehicles_Cannot_Be_Created_With_Null_RegNr()
+        {
+            //Setup & Act
+            var _ = new Vehicle(null);
         }
     }
 }
