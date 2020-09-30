@@ -53,6 +53,8 @@ encode the date)
 
     GET /api/fordon/GetSummary?regnr=abc999&date=2020-09-29
 
+regnr: _string_; date: _short datetime_
+
 ---
 
 ## Improvement areas
