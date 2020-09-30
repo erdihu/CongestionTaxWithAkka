@@ -44,7 +44,10 @@ regnr: _string_; type: _VehicleType_
 
     POST /api/fordon/registerpass?regnr=abc999&passTime=2020-09-29T12:20:10%2B02:00
 
-## regnr: _string_; passTime: _datetime_ (do not forget to URL encode the date)
+regnr: _string_; passTime: _datetime_ (do not forget to URL
+encode the date)
+
+---
 
 ### Get tax for a given vehicle and day
 
